@@ -1,0 +1,402 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: stock sense
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.14@4e4b6c2e3080245d91e509ed44e62fb6e7886ffca9eede1d093ad47ad420d704
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: code
+      id: 1786418352140-source-1786418439349-target
+      source: '1786418352140'
+      sourceHandle: source
+      target: '1786418439349'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: end
+      id: 1786418474903-source-1786418803354-target
+      source: '1786418474903'
+      sourceHandle: source
+      target: '1786418803354'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1786418439349-source-1786431483625-target
+      source: '1786418439349'
+      sourceHandle: source
+      target: '1786431483625'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: code
+        targetType: http-request
+      id: 1786418439349-source-1786432440424-target
+      source: '1786418439349'
+      sourceHandle: source
+      target: '1786432440424'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: llm
+      id: 1786431483625-source-1786418474903-target
+      source: '1786431483625'
+      sourceHandle: source
+      target: '1786418474903'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: http-request
+        targetType: llm
+      id: 1786432440424-source-1786418474903-target
+      selected: false
+      source: '1786432440424'
+      sourceHandle: source
+      target: '1786418474903'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: stock_code_1
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: stock_code_1
+        - label: stock_code_2
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: stock_code_2
+        - label: budget
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: budget
+        - label: 投资风格
+          max_length: 48
+          options:
+          - 保守型
+          - 激进型
+          - 平衡型
+          required: true
+          type: select
+          variable: invest_style
+      height: 167
+      id: '1786418352140'
+      position:
+        x: 80
+        y: 282
+      positionAbsolute:
+        x: 80
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "def main(stock_code_1: str, stock_code_2: str) -> dict:\n    def to_yahoo_url(code):\n\
+          \        code = code.strip().upper()\n        if not code:\n           \
+          \ return ''\n        if code.isdigit() and len(code) == 6:\n           \
+          \ symbol = code + '.SS' if code.startswith('6') else code + '.SZ'\n    \
+          \    elif code.isdigit() and len(code) <= 5:\n            symbol = code.zfill(4)\
+          \ + '.HK'\n        else:\n            symbol = code\n        return 'https://query1.finance.yahoo.com/v8/finance/chart/'\
+          \ + symbol + '?interval=1d&range=1mo'\n    \n    return {\n        \"url1\"\
+          : to_yahoo_url(stock_code_1),\n        \"url2\": to_yahoo_url(stock_code_2),\n\
+          \    }\n\n"
+        code_language: python3
+        desc: 生成能够去股票数据库查询两只股票信息的网址
+        outputs:
+          url1:
+            children: null
+            type: string
+          url2:
+            children: null
+            type: string
+        selected: false
+        title: 生成查询股票网址
+        type: code
+        variables:
+        - value_selector:
+          - '1786418352140'
+          - stock_code_1
+          value_type: string
+          variable: stock_code_1
+        - value_selector:
+          - '1786418352140'
+          - stock_code_2
+          value_type: string
+          variable: stock_code_2
+      height: 97
+      id: '1786418439349'
+      position:
+        x: 384
+        y: 282
+      positionAbsolute:
+        x: 384
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: deepseek.r1
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: b49f4753-6149-4c43-846f-57aec81023c0
+          role: system
+          text: "你是一位专业的股票分析师，请用中文对以下两只股票进行横向对比分析。\n\n请严格按照以下格式输出：\n你是一位专业的股票分析师，请用中文对以下两只股票进行横向对比分析。\n\
+            从以下5个维度对每只股票评分（满分5分）：\n1. 估值\n2. 盈利能力\n3. 技术面\n4. 财务健康\n5. 市场情绪\n\n请严格按照以下格式输出：\n\
+            \n## \U0001F4CA 五维度评分雷达图\n\n```echarts\n{\n  \"tooltip\": {},\n  \"legend\"\
+            : { \"data\": [\"股票1名称\", \"股票2名称\"] },\n  \"radar\": {\n    \"indicator\"\
+            : [\n      { \"name\": \"估值\", \"max\": 5 },\n      { \"name\": \"盈利能力\"\
+            , \"max\": 5 },\n      { \"name\": \"技术面\", \"max\": 5 },\n      { \"\
+            name\": \"财务健康\", \"max\": 5 },\n      { \"name\": \"市场情绪\", \"max\":\
+            \ 5 }\n    ],\n    \"shape\": \"circle\",\n    \"splitNumber\": 5\n  },\n\
+            \  \"series\": [{\n    \"type\": \"radar\",\n    \"data\": [\n      {\n\
+            \        \"value\": [估值分, 盈利能力分, 技术面分, 财务健康分, 市场情绪分],\n        \"name\"\
+            : \"股票1名称\",\n        \"areaStyle\": { \"opacity\": 0.2 }\n      },\n\
+            \      {\n        \"value\": [估值分, 盈利能力分, 技术面分, 财务健康分, 市场情绪分],\n     \
+            \   \"name\": \"股票2名称\",\n        \"areaStyle\": { \"opacity\": 0.2 }\n\
+            \      }\n    ]\n  }]\n}\n\n\n## \U0001F4DD 简要分析\n| 股票 | 亮点 | 风险 |\n|------|------|------|\n\
+            |股票1名称  | XXX | XXX |\n|股票2名称 | XXX | XXX |\n\n## \U0001F3C6 综合推荐\n最推荐：XXX\n\
+            理由：XXX\n\n## ⚠️ 操作建议\n| 股票 | 建议 | 目标价 | 止损价 | 建议买入金额 | 建议买入股数 |\n|------|------|--------|--------|------------|------------|\n\
+            | 股票1名称 | 买入/持有/观望 | XXXX | XXXX | XXXX元 | XX股 |\n| 股票2名称 | 买入/持有/观望 |\
+            \ XXXX | XXXX | XXXX元 | XX股 |\n\n> \U0001F4B0 基于您的预算 {{budget}} 元，建议资金分配：股票1\
+            \ XX% + 股票2 XX%\n请根据用户的投资风格调整建议：\n- 保守型：优先推荐估值低、分红稳定、波动小的股票\n- 平衡型：兼顾成长性和稳定性\n\
+            - 激进型：优先推荐成长性强、弹性大的股票\n\n\n\n\n> ⚠️ 本报告仅供参考，不构成投资建议，投资有风险，入市需谨慎。\n\n"
+        - id: b42b9976-9d37-4780-bf66-56716fd56a50
+          role: user
+          text: '请对比分析以下两只股票：
+
+            股票1代码：{{#1786418352140.stock_code_1#}}
+
+            数据：{{#1786431483625.body#}}
+
+            股票2代码：{{#1786418352140.stock_code_2#}}
+
+            数据：{{#1786431483625.body#}}
+
+            用户预算：{{#1786418352140.budget#}}
+
+            投资风格：{{#1786418352140.invest_style#}}'
+        - id: 600772ea-86a3-412a-bb3d-e85b66eca6a3
+          role: assistant
+          text: ''
+        selected: false
+        structured_output_enabled: false
+        title: 对比/提议
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1786418474903'
+      position:
+        x: 1055.7156765425746
+        y: 220.98916504452689
+      positionAbsolute:
+        x: 1055.7156765425746
+        y: 220.98916504452689
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1786418474903'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 89
+      id: '1786418803354'
+      position:
+        x: 1333.5983337878372
+        y: 211.289845234702
+      positionAbsolute:
+        x: 1333.5983337878372
+        y: 211.289845234702
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: User-Agent:Mozilla/5.0
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 股票1
+        type: http-request
+        url: https://query1.finance.yahoo.com/v8/finance/chart{{#1786418439349.url1#}}
+        variables: []
+      height: 157
+      id: '1786431483625'
+      position:
+        x: 709.4651366188239
+        y: 110.01648483391924
+      positionAbsolute:
+        x: 709.4651366188239
+        y: 110.01648483391924
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        authorization:
+          config: null
+          type: no-auth
+        body:
+          data: []
+          type: none
+        desc: ''
+        headers: User-Agent:Mozilla/5.0
+        method: get
+        params: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: true
+          retry_interval: 100
+        selected: false
+        ssl_verify: true
+        timeout:
+          max_connect_timeout: 0
+          max_read_timeout: 0
+          max_write_timeout: 0
+        title: 股票2
+        type: http-request
+        url: https://query1.finance.yahoo.com/v8/finance/chart{{#1786418439349.url2#}}
+        variables: []
+      height: 157
+      id: '1786432440424'
+      position:
+        x: 689.4870166732094
+        y: 464.8436324042731
+      positionAbsolute:
+        x: 689.4870166732094
+        y: 464.8436324042731
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 202.98197116424853
+      y: 187.46445852468605
+      zoom: 0.7199242189124411
