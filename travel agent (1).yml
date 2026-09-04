@@ -1,0 +1,605 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: travel agent
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai_api_compatible:0.0.14@4e4b6c2e3080245d91e509ed44e62fb6e7886ffca9eede1d093ad47ad420d704
+kind: app
+version: 0.4.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1785221193463-source-1785224683624-target
+      selected: false
+      source: '1785221193463'
+      sourceHandle: source
+      target: '1785224683624'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1785224683624-source-1785226138221-target
+      source: '1785224683624'
+      sourceHandle: source
+      target: '1785226138221'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: code
+      id: 1785226138221-source-1785313484859-target
+      source: '1785226138221'
+      sourceHandle: source
+      target: '1785313484859'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: llm
+      id: 1785313484859-source-1785224481207-target
+      source: '1785313484859'
+      sourceHandle: source
+      target: '1785224481207'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: llm
+      id: 1785224481207-source-1785312525842-target
+      source: '1785224481207'
+      sourceHandle: source
+      target: '1785312525842'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: code
+      id: 1785312525842-source-1786671841936-target
+      source: '1785312525842'
+      sourceHandle: source
+      target: '1786671841936'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: code
+        targetType: end
+      id: 1786671841936-source-1785314170044-target
+      source: '1786671841936'
+      sourceHandle: source
+      target: '1785314170044'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: 地点
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: destination
+        - label: 天数
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: days
+        - label: 预算
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: budget
+        - label: 出行群体
+          max_length: 48
+          options:
+          - 家庭出游
+          - 朋友结伴
+          - 独自旅行
+          - 老年出游
+          - 商务旅行
+          - 情侣蜜月
+          required: true
+          type: select
+          variable: group_type
+        - label: 出行时间
+          max_length: 48
+          options:
+          - 春季 3-5月
+          - 夏季 6-8月
+          - 秋季 9-11月
+          - 冬季 12-次年2月
+          required: true
+          type: select
+          variable: travel_time
+        - label: 出行人数
+          max_length: 48
+          options: []
+          required: true
+          type: number
+          variable: people
+      height: 219
+      id: '1785221193463'
+      position:
+        x: -337.8842394801072
+        y: -99.04193828150129
+      positionAbsolute:
+        x: -337.8842394801072
+        y: -99.04193828150129
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: claude-sonnet-4
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: df12cc3e-def1-4303-a153-61a8647480e5
+          role: system
+          text: '你是一位专业旅游顾问，请根据以下信息为用户生成一份完整的旅游攻略。
+
+
+            目的地：{{#1785221193463.destination#}}
+
+            游玩时间：{{#1785221193463.days#}}天
+
+            总预算：{{#1785221193463.budget#}} 元出行季节：{{#1785221193463.travel_time#}}
+
+            出行群体：{{#1785221193463.group_type#}}
+
+            出行人数：{{#1785221193463.people#}}
+
+
+
+            预算分配：
+
+            - 住宿：{{#1785313484859.hotel#}} 元
+
+            - 餐饮：{{#1785313484859.food#}} 元
+
+            - 交通：{{#1785313484859.transport#}} 元
+
+            - 门票：{{#1785313484859.ticket#}} 元
+
+            - 购物：{{#1785313484859.shopping#}} 元
+
+
+            景点及酒店信息：
+
+            {{#1785226138221.attractions_hotels#}}
+
+
+            历史文化背景：
+
+            {{#1785226138221.culture_background#}}
+
+
+            请生成一份结构清晰的旅游攻略，包括：
+
+            1. 行程概览
+
+            2. 每日行程安排
+
+            3. 住宿推荐
+
+            4. 美食推荐
+
+            5. 购物建议
+
+            6. 注意事项
+
+
+            '
+        - id: 9a915702-f247-47e6-af83-8ad097722474
+          role: user
+          text: ''
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 1000
+        selected: false
+        title: llm3
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1785224481207'
+      position:
+        x: 338.89046163692086
+        y: 151.43938856100587
+      positionAbsolute:
+        x: 338.89046163692086
+        y: 151.43938856100587
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: claude-sonnet-4
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: 72bd50b0-f1eb-4d83-a65e-153ddbc44deb
+          role: system
+          text: '你是一位专业旅游顾问，请针对目的地「{{#1785221193463.destination#}}」，
+
+            根据出行群体{{#1785221193463.group_type#}}和出行时间{{#1785221193463.travel_time#}}和出行人数{{#1785221193463.people#}}
+
+            充分考虑用户需求，并结合旅行时间，选择在当时季节合适的景点
+
+            提供以下两部分信息：
+
+
+            ## Part1_景点酒店
+
+            请详细介绍以下内容：
+
+            - 主要景点（名称、简介、特色、建议游览时间）
+
+            - 酒店推荐（名称、星级、价格区间、位置）
+
+            - 美食推荐（特色菜、推荐餐厅）
+
+            - 交通信息（如何到达、当地交通方式）
+
+            - 购物推荐（特色商品、推荐购物地点）
+
+
+            ## Part2_背景文化
+
+            介绍该目的地的背景信息，包括：
+
+            - 历史沿革
+
+            - 文化特色
+
+            - 当地风俗习惯
+
+
+            请严格按照以上两个标题格式输出，不要合并内容。
+
+
+            '
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 1000
+        selected: false
+        title: 景点酒店+历史文化背景
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1785224683624'
+      position:
+        x: -65.87797774162729
+        y: -45.326897834572605
+      positionAbsolute:
+        x: -65.87797774162729
+        y: -45.326897834572605
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "def main(llm_output: str):\n    import re\n    \n    part1 = \"\"\n\
+          \    part2 = \"\"\n    \n    match1 = re.search(r'## Part1_景点酒店(.*?)(?=##\
+          \ Part2_背景文化|$)', llm_output, re.DOTALL)\n    match2 = re.search(r'## Part2_背景文化(.*?)$',\
+          \ llm_output, re.DOTALL)\n    \n    if match1:\n        part1 = match1.group(1).strip()\n\
+          \    if match2:\n        part2 = match2.group(1).strip()\n    \n    return\
+          \ {\n        \"attractions_hotels\": part1,\n        \"culture_background\"\
+          : part2\n    }\n\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          attractions_hotels:
+            children: null
+            type: string
+          culture_background:
+            children: null
+            type: string
+        selected: false
+        title: 解析LLM输出
+        type: code
+        variables:
+        - value_selector:
+          - '1785224683624'
+          - text
+          value_type: string
+          variable: llm_output
+      height: 53
+      id: '1785226138221'
+      position:
+        x: -11.252127083927832
+        y: 120.37853257554568
+      positionAbsolute:
+        x: -11.252127083927832
+        y: 120.37853257554568
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1785224481207'
+          - text
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: claude-sonnet-4
+          provider: langgenius/openai_api_compatible/openai_api_compatible
+        prompt_template:
+        - id: ad78a489-602a-43a5-a084-a0dbd546bfc8
+          role: system
+          text: '根据以下景点信息，预估各景点的日均人流量（单位：人次）。
+
+            出行时间：{{#1785221193463.travel_time#}}
+
+            景点信息：
+
+            {{#1785226138221.attractions_hotels#}}
+
+
+            请用JSON格式输出，key是景点名称，value是日均人流量数字，不要有其他内容。
+
+            例如：故宫对应30000，天坛对应15000，以此类推。
+
+
+
+            '
+        - id: c16c1f4b-c107-45b0-ba70-8781cdf63513
+          role: user
+          text: '{{#1785224481207.text#}}'
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 1000
+        selected: false
+        title: LLM 4
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 89
+      id: '1785312525842'
+      position:
+        x: 338.89046163692086
+        y: 40.638394083463126
+      positionAbsolute:
+        x: 338.89046163692086
+        y: 40.638394083463126
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "def main(budget: str):\n    num = int(budget)\n    hotel = round(num\
+          \ * 0.26)\n    food = round(num * 0.31)\n    transport = round(num * 0.20)\n\
+          \    ticket = round(num * 0.11)\n    shopping = round(num * 0.12)\n    return\
+          \ {\n        \"hotel\": hotel,\n        \"food\": food,\n        \"transport\"\
+          : transport,\n        \"ticket\": ticket,\n        \"shopping\": shopping\n\
+          \    }\n\n\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          food:
+            children: null
+            type: number
+          hotel:
+            children: null
+            type: number
+          shopping:
+            children: null
+            type: number
+          ticket:
+            children: null
+            type: number
+          transport:
+            children: null
+            type: number
+        selected: false
+        title: 预算分配
+        type: code
+        variables:
+        - value_selector:
+          - '1785221193463'
+          - budget
+          value_type: string
+          variable: budget
+      height: 53
+      id: '1785313484859'
+      position:
+        x: 145.25605603011124
+        y: 287.1425866409542
+      positionAbsolute:
+        x: 145.25605603011124
+        y: 287.1425866409542
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1786671841936'
+          - text
+          value_type: string
+          variable: text
+        selected: false
+        title: 结束
+        type: end
+      height: 89
+      id: '1785314170044'
+      position:
+        x: 940.1260218533092
+        y: 40.638394083463126
+      positionAbsolute:
+        x: 940.1260218533092
+        y: 40.638394083463126
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    - data:
+        code: "def main(crowd_data: str, travel_text: str):\n    import json, re\n\
+          \n    cleaned = crowd_data.strip()\n    match = re.search(r'```(?:json)?\\\
+          s*([\\s\\S]*?)```', cleaned)\n    if match:\n        cleaned = match.group(1).strip()\n\
+          \n    data = json.loads(cleaned)\n    labels = list(data.keys())\n    values\
+          \ = list(data.values())\n\n    colors = [\n        \"#5B8FF9\", \"#5AD8A6\"\
+          , \"#F6BD16\", \"#E8684A\",\n        \"#6DC8EC\", \"#9270CA\", \"#FF9D4D\"\
+          , \"#269A99\"\n    ]\n\n    series_data = [\n        {\"value\": v, \"itemStyle\"\
+          : {\"color\": colors[i % len(colors)]}}\n        for i, v in enumerate(values)\n\
+          \    ]\n\n    echarts_config = {\n        \"title\": {\"text\": \"各景点预估日均人流量\"\
+          , \"left\": \"center\"},\n        \"tooltip\": {\"trigger\": \"axis\"},\n\
+          \        \"xAxis\": {\n            \"type\": \"category\",\n           \
+          \ \"data\": labels,\n            \"axisLabel\": {\"rotate\": 30}\n     \
+          \   },\n        \"yAxis\": {\n            \"type\": \"value\",\n       \
+          \     \"name\": \"人次\"\n        },\n        \"series\": [{\n           \
+          \ \"type\": \"bar\",\n            \"data\": series_data,\n            \"\
+          name\": \"日均人流量\",\n            \"label\": {\n                \"show\":\
+          \ True,\n                \"position\": \"top\",\n                \"formatter\"\
+          : \"{c} 人次\",\n                \"fontSize\": 12\n            },\n      \
+          \      \"barMaxWidth\": 60\n        }]\n    }\n\n    chart_block = \"```echarts\\\
+          n\" + json.dumps(echarts_config, ensure_ascii=False, indent=2) + \"\\n```\"\
+          \n\n    return {\"text\": travel_text + \"\\n\\n\" + chart_block}\n\n\n"
+        code_language: python3
+        desc: ''
+        outputs:
+          text:
+            children: null
+            type: string
+        selected: false
+        title: 代码执行 3
+        type: code
+        variables:
+        - value_selector:
+          - '1785312525842'
+          - text
+          value_type: string
+          variable: crowd_data
+        - value_selector:
+          - '1785224481207'
+          - text
+          value_type: string
+          variable: travel_text
+      height: 53
+      id: '1786671841936'
+      position:
+        x: 638.3719318195996
+        y: 40.638394083463126
+      positionAbsolute:
+        x: 638.3719318195996
+        y: 40.638394083463126
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 243
+    viewport:
+      x: 496.51566144096387
+      y: 285.34685768580334
+      zoom: 0.9073099564123907
